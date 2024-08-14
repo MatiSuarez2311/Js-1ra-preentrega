@@ -1,76 +1,192 @@
+const producto = document.getElementById("Productos")
+const carrito = document.getElementById("carrito")
+const Carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-console.log("a" == "a")
-    const nombreUser = prompt("¿Cuál es tu ID?")
-    const nombrePass = prompt("¿Cuál es tu contraseña?")
+const Productos =[
 
- if(nombrePass !="" && nombreUser != ""){
-     alert("Podes pasar")
- }else{
-     alert("Id o Contraseña incorrecto")
- }
+        {
+            titulo: "Funko Pop Messi",
+            imagen: "https://dcdn.mitiendanube.com/stores/001/287/783/products/messi1-2cd773fbdb0b9292a316914023676865-1024-1024.webp",
+            precio: 15000,
+            
+        },
 
-  let edad = parseInt(prompt("¿Cuántos años tenes?"))
-  if (edad >=18){
-      alert("Puede pasar!")
-  } else{
-      alert("Necesitas la supervision de un Adulto")
-  }
-
-  let pasa = confirm("¿Quieres entrar a nuestra tienda?")
-  if (pasa === true){
-      alert("Bienvenido")
-  } else{
-      alert("Oh que lastima")
+        {
+            titulo: "Capa Kamado Tanjirou",
+            imagen: "https://m.media-amazon.com/images/I/81CEuMa9pdS._AC_SL1500_.jpg",
+            precio: 25000,
+         
+        },
+        {
+            titulo: "Bufanda HARRY POTTER - SLYTHERIN",
+            imagen: "https://acdn.mitiendanube.com/stores/003/702/378/products/bufanda-harry-potter-slytherin-frase1-465e895b672b0e77de16230257723865-1024-1024.jpg",
+            precio: 10000,
+         
+        },
     
-      const producto = parseInt(prompt("¿Queres cigarrilos? (1) o ¿QUeres gaseosas? o ¿Queres Productos para el hogar?"))
-      
-      if(producto ===1){
-        alert("Tenemos variedad en marcas")
-    } else if (producto === 2){
-        alert("Tenemos solo marca Coca-Cola")
-    } else if (producto === 3){
-        alert("Nos esta quedado algunos productos")
-    } else{
-        alert("No reconocemos ese producto")
-    } 
-  
-    let bandera = true
-    let totalcompra = 0
+];
 
-    const logicaDeCompra = (valor , cantidad) =>{
-        totalCompra += valor * cantidad
+const sumadoraAlCarrito = (titulo, precio) => {
+
+    const producto = Carrito.find(el => {
+            return el.titulo == titulo
+        })
+        producto.cantidad += 1
+    
+    actualizadoraDeCarrito()
+}
+
+
+
+const restadoraAlCarrito = (titulo, precio) => {
+    const producto = Carrito.find(el => {
+            return el.titulo == titulo
+        })
+        if(producto.cantidad <= 1){
+            let arrayDetitulos = Carrito.map(el => {
+                return el.titulo
+            })
+           
+            let index = arrayDetitulos.indexOf(titulo)
+            Carrito.splice(index, 1)
+        }else{
+            producto.cantidad -= 1
+        }    
+    actualizadoraDeCarrito()
+}
+
+
+
+const creadoraDeCardsDeCarrito = (titulo, precio, cantidad) => {
+    const contenedor = document.createElement("div")
+    const tituloDOM = document.createElement("h3")
+    const precioDOM = document.createElement("p")
+    const contenedorCantidad = document.createElement("div")
+    const cantidadDOM = document.createElement("p")
+    const botonPlusDOM = document.createElement("button")
+    const botonMinumDOM = document.createElement("button")
+
+
+    contenedor.classList.add("contenedor")
+    tituloDOM.classList.add("titulo")
+    precioDOM.classList.add("precio")
+    cantidadDOM.classList.add("cantidad")
+
+
+    tituloDOM.innerText = titulo
+    precioDOM.innerText = precio    
+    cantidadDOM.innerText = cantidad    
+    
+    botonPlusDOM.innerText = "+"
+    botonMinumDOM.innerText = "-"
+
+    botonPlusDOM.addEventListener("click", ()=>{
+        sumadoraAlCarrito(titulo)
+    })
+
+    botonMinumDOM.addEventListener("click", ()=>{
+        restadoraAlCarrito(titulo)
+    })
+
+
+
+    contenedorCantidad.appendChild(botonMinumDOM)
+    contenedorCantidad.appendChild(cantidadDOM)
+    contenedorCantidad.appendChild(botonPlusDOM)
+
+    contenedor.appendChild(tituloDOM)
+    contenedor.appendChild(precioDOM)
+    contenedor.appendChild(contenedorCantidad)
+
+
+    return contenedor
+}
+
+
+
+
+
+
+const actualizadoraDeCarrito = () => {
+    carrito.innerHTML = ""
+
+    const totalDOM = document.createElement("h3")
+
+    const total = Carrito.reduce((acc, el)=>{
+        return acc + el.cantidad * el.precio
+    },0)
+    
+    totalDOM.innerText = total
+
+    Carrito.forEach(el =>{
+        carrito.appendChild(creadoraDeCardsDeCarrito(el.titulo, el.precio, el.cantidad)) 
+        carrito.appendChild(totalDOM) 
+    })
+    localStorage.setItem("carrito", JSON.stringify(Carrito))
+}
+
+
+const agregadoraAlCarrito = (titulo, precio) => {
+    const booleano = Carrito.some(el =>{
+        return el.titulo == titulo
+    })
+
+    if(booleano){
+        const producto = Carrito.find(el => {
+            return el.titulo == titulo
+        })
+        producto.cantidad += 1
+    }else{
+        Carrito.push({
+            titulo,
+            precio,
+            cantidad: 1
+        })
     }
+    actualizadoraDeCarrito()
+
+}
+
+const creadoraDeCards = (titulo, imagen, precio) => {
+    const contenedor = document.createElement("div")
+    const tituloDOM = document.createElement("h3")
+    const imagenDOM = document.createElement("img")
+    const precioDOM = document.createElement("p")
+    const botonDOM = document.createElement("button")
+
+    contenedor.classList.add("contenedor")
+    tituloDOM.classList.add("titulo")
+    imagenDOM.classList.add("imagen")
+    precioDOM.classList.add("precio")
+    botonDOM.classList.add("boton")
+
+    tituloDOM.innerText = titulo
+    precioDOM.innerText = "$" + precio
+    botonDOM.innerText = "Comprar"
+    
+    imagenDOM.src = imagen
+
+    botonDOM.addEventListener("click", ()=>{
+        agregadoraAlCarrito(titulo, precio)
+    })
+   
+    contenedor.appendChild(imagenDOM)
+    contenedor.appendChild(tituloDOM)
+    contenedor.appendChild(precioDOM)
+    contenedor.appendChild(botonDOM)
 
 
-    while(bandera){
-        alert("Que desea comprar:\n 1-Cigarrilo Master \n 2-Gaseosa Coca cola 500ml \n 3-Esponja cocina")
-    let opcionElegida = parseInt(prompt(""))
-       
-    switch (opcionElegida) {
-        case 1:  
-        let cantidad1 = parseInt(prompt("¿Cuantos deseas comprar?"))
-        logicaDeCompra(1500)        
-            break;
-        case 2:
-            let cantidad2 = parseInt(prompt("¿Cuantos deseas comprar?"))
-            logicaDeCompra(1100)
-            break;
-        case 3:
-            let cantidad3 = parseInt(prompt("¿Cuantos deseas comprar?"))
-            logicaDeCompra(500)
-            break;    
-        default:
-            alert("No tenemos por el momento")
-            break;
-    }
-    if(totalcompra !== 0){
+    return contenedor
+}
 
-    }
-    alert("El subtotal es: " + totalcompra)
-        bandera = confirm("¿Desea continuar comprando?")
-    }
 
-alert("El total de la compra es: " + totalcompra)
 
- 
+Productos.forEach(el => {
+    const productoDOM = creadoraDeCards(el.titulo, el.imagen, el.precio)
 
+    productos.appendChild(productoDOM)
+})
+
+document.addEventListener("DOMContentLoaded",()=>{
+        actualizadoraDeCarrito()
+})

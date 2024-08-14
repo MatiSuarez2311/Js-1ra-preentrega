@@ -1,0 +1,22 @@
+#productos{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#carrito{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: aqua;
+}
+
+.contenedor{
+    width: auto;
+    background-color: rgba(67, 170, 170, 0.658);
+
+}
+
+.imagen{
+    width: 500px;
+}
