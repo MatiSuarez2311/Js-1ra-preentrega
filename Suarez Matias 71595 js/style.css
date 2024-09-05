@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+.protest-guerrilla-regular {
+    font-family: "Protest Guerrilla", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+.Contenedor1{
+    position: relative;
+    width: 100%;
+    height: 100%;  
+}
+.advertising{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.advertising video{
+    width: 100%;
+    height: 100%;
+}
+.textbox{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    font-size: 20rem;
+    text-transform: uppercase;
+    mix-blend-mode: multiply;
+}
+
+
+
+
+  #productos{
+    width: 100%;
+    height: 100%;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    border-width: 5px;
+    border-color: rgb(168, 3, 105);
+    border-style:ridge;
+    border-radius: 50px;
+    margin: 10px;
+    padding: 100px;
+}
+
+#carrito{
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: aqua; */
+}
+
+.contenedor{
+    width: auto;
+    /* background-color: rgba(67, 170, 170, 0.658); */
+
+}
+
+.imagen{
+    width: 450px;
+    height: 60%;
+    border: 10px;
+}
