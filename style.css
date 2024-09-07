@@ -1,22 +1,75 @@
-#productos{
-    width: 80%;
-    margin: 0 auto;
+ @import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+.protest-guerrilla-regular {
+    font-family: "Protest Guerrilla", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+  
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+.Contenedor1{
+    position: relative;
+    width: 100%;
+   
+}
+.advertising{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.advertising video{
+    width: 100%;
+    height: 100%;
+}
+.textbox{
+    position: absolute;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    font-size: 20rem;
+    text-transform: uppercase;
+    mix-blend-mode:lighten;
 }
 
-#carrito{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: aqua;
+.Subtitulo{
+    color: #d3156e;
+    font-size: 75px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px;
+    -webkit-text-decoration: underline solid rgb;
+            text-decoration: underline solid rgb;
+    font-style: italic;
+    text-decoration: underline;
+    text-align: center;
 }
 
-.contenedor{
-    width: auto;
-    background-color: rgba(67, 170, 170, 0.658);
-
+#productos, #carrito {
+    margin: 20px;
 }
 
-.imagen{
-    width: 500px;
+.producto, .carrito-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100px;
+    height: auto;
+}
+
+button {
+    padding: 5px 10px;
+    margin-top: 10px;
 }

@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>A.K.I.R.A</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <h1>ONICHAN Tu Tienda Otaku</h1>
-    <div id="productos"></div>
-    <div id="carrito"></div>
     
-    <script src="./main.js"></script>
+    <section class="Contenedor1">
+    <div class="advertising">
+            <video class="videotitulo" src="./video/ANIME1.mp4" autoplay muted loop></video> 
+        <div class="textbox">
+            <h1 class="protest-guerrilla-regular"> A.K.I.R.A </h1>
+        </div>
+    </div>
+       <h2 class="Subtitulo">NUESTROS PRODUCTOS EDICION LIMITADA<h2>
+    </section>
+   
 
+      <!-- Buscador -->
+    <input type="text" id="buscador" placeholder="Buscar productos...">
+    <div id="productos"></div>
+
+    <!-- Carrito de compras -->
+    <div id="carrito">
+        <h2>Carrito</h2>
+        <div id="carritoItems"></div>
+        <button id="finalizarCompra">Finalizar Compra</button>
+    </div>
+
+    <!-- Script de JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
