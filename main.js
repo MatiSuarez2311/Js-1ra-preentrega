@@ -179,3 +179,58 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizadoraDeCarrito();
 });
 
+finalizarCompra.addEventListener("click", () => {
+    if (Carrito.length > 0) {
+        const total = Carrito.reduce((acc, el) => acc + el.cantidad * el.precio, 0);
+        
+        Swal.fire({
+            title: 'Procesando su compra...',
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Envío de los datos del carrito a una API
+        fetch('https://api.example.com/checkout', { // URL de la API
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: Carrito,    // Detalles del carrito
+                total: total       // Total de la compra
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                title: '¡Gracias por su compra!',
+                text: `El total de su compra es $${total}. Pedido confirmado con ID: ${data.orderId}`,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                Carrito.length = 0; 
+                actualizadoraDeCarrito();
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema procesando su compra. Por favor intente de nuevo más tarde.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        });
+
+    } else {
+        Swal.fire({
+            title: 'El carrito está vacío',
+            text: 'Por favor, agregue productos antes de finalizar la compra.',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+});
